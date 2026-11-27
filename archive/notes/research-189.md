@@ -166,3 +166,99 @@ Lemme Cyc (singleton ≠ x₀ ⇒ n = 2σ+1, et alors circonférence = n−1) ; 
 
 ### M3.5 Lean
 Si la version faible est prouvée : ~1 500–2 500 lignes de plus que les manches 1–2 (plus long cycle, insertion d'un chemin de K dans un arc, comptage des trous). Les constructions de M3.2 sont des certificats finis (n = 11 et 15), vérifiables par `decide` sur `Fin n`, si l'on veut documenter l'échec de la piste locale.
+
+## Étape H1 — sommet d'articulation (feuille `H1` du fichier R2) : **PROUVÉE**
+
+### H1.0 Énoncé et verdict
+`H1` : G connexe, n ≥ 2, (H), 2σ+3 ≤ n, ∃ c avec G − c non connexe ⇒ G traçable. **Preuve complète ci-dessous**, valable en diamètre quelconque, sans Ore, sans Proposition K. On prouve en fait plus : **(H) + δ ≥ 2 + sommet d'articulation ⇒ traçable** (l'hypothèse n ≥ 2σ+3 ne sert qu'à obtenir δ ≥ 2). Avec le Théorème C : (H) + sommet d'articulation ⇒ traçable, pour tout n. La Proposition K (M2.2) devient un corollaire et n'a plus à être formalisée.
+Idée clé : prendre P **le plus long parmi les chemins qui contiennent x₀**. Toutes les opérations des Lemmes 4 et 5 (prolongement, rotation, insertion, ouverture d'un cycle) produisent des chemins dont l'ensemble de sommets contient V(P), donc contient x₀ : ces lemmes restent vrais. Et le sommet x₀ (degré petit) n'est jamais hors du chemin, ce qui supprime le seul cas qui résistait au comptage.
+
+### H1.1 Lemmes (G connexe, (H), x₀ de degré minimum, Fait 0 : deg v ≥ σ pour v ≠ x₀)
+**H1.1 (δ ≥ 2).** Si n ≥ 2σ+3 alors δ ≥ 2, donc σ ≥ 2. *Preuve.* Cor. 1b : une feuille x₀ de voisin c' donne E(x₀)+E(c') = n (pour tout w, d(x₀,w) = 1 + d(c',w) si w ≠ x₀), d'où n ≤ 2σ+2. □
+Dans la suite : δ ≥ 2 (et σ ≥ δ ≥ 2), c sommet d'articulation.
+**H1.2 (géométrie d'un sommet d'articulation).** Soit C une composante de G − c. (a) v ∈ C ⇒ N(v) ⊆ C ∪ {c}. (b) C ∩ N(c) ≠ ∅. (c) u ∈ C, w ∉ C ∪ {c} ⇒ d(u,w) = d(u,c) + d(c,w). (d) u ∈ C ∩ N(c), z ∈ C' ∩ N(c), C' ≠ C ⇒ d(u,z) = 2. □ (élémentaire)
+**H1.3 (Lemme 6).** (a) n ≤ 3σ+1 ; (b) G − c a exactement deux composantes C₁, C₂. (Preuves en §2.)
+**H1.4 (tailles).** σ ≤ |Cᵢ| ≤ 2σ. *Preuve.* |Cᵢ| ≥ 2 (un singleton {z} aurait deg z = 1 < δ), donc Cᵢ contient z ≠ x₀ avec N(z) ⊆ (Cᵢ\{z}) ∪ {c} : σ ≤ |Cᵢ|. Puis |Cᵢ| = n − 1 − |C_{3−i}| ≤ 3σ − σ. □
+**H1.5 (D2 : diamètre 2 hors x₀).** p ≠ r dans Cᵢ \ {x₀} ⇒ d(p,r) ≤ 2. *Preuve.* Sinon N[p] ∩ N[r] = ∅, deux ensembles de taille ≥ σ+1 dans Cᵢ ∪ {c} : |Cᵢ| ≥ 2σ+1, contre H1.4. □
+**H1.6 (côté minimal).** Si |C'| = σ et x₀ ∉ C' alors C' ⊆ N(c) (et C' ∪ {c} est une clique). *Preuve.* z ∈ C' : deg z ≥ σ = |(C'\{z}) ∪ {c}| ⊇ N(z), égalité. □
+**H1.7 (cas limite, lemme de contradiction).** Si |Cᵢ| = 2σ, alors aucun v ∈ Cᵢ ∩ N(c), v ≠ x₀, n'a deg v = σ.
+*Preuve.* |C_{3−i}| = σ (H1.3a, H1.4). U = Cᵢ \ N[v] a 2σ − 1 − (σ−1) = σ éléments ; ceux ≠ x₀ sont à distance 2 de v (H1.5) ; N(c) ∩ C_{3−i} est à distance 2 de v (H1.2d) et disjoint de U. Si x₀ ∉ Cᵢ : |Γ(v)| ≥ σ + 1. Si x₀ ∈ Cᵢ : x₀ ∉ C_{3−i}, donc |N(c) ∩ C_{3−i}| = σ (H1.6) et |Γ(v)| ≥ (σ−1) + σ ≥ σ+1 (σ ≥ 2). Contredit (H). □
+**H1.8 (plus long chemin passant par x₀).** Soit 𝒫 l'ensemble des chemins contenant x₀ et P = x₁…x_m ∈ 𝒫 de longueur maximale dans 𝒫 ; supposons m < n. Alors :
+(a) [Lemme 4 dans 𝒫] N(x₁), N(x_m) ⊆ V(P), I₁ ∩ I_m = ∅, deg x₁ + deg x_m ≤ m − 1 ;
+(b) [Lemme 5ab dans 𝒫] y ∉ V(P), y ~ x_j ⇒ 2 ≤ j ≤ m−1, y ≁ x_{j±1}, x₁ ≁ x_{j+1}, x_m ≁ x_{j−1} ;
+(c) [rotation] on peut choisir P avec x₁, x_m ≠ x₀ (si x₁ = x₀ : deg x₀ ≥ 2 et (a) donnent x₀ ~ x_j, j ≥ 3 ; x_{j−1}…x₂x₁x_j…x_m ∈ 𝒫, même longueur) ;
+(d) alors m ≥ 2σ + 1 ; et tout y ∉ V(P) est ≠ x₀, donc deg y ≥ σ.
+*Preuve.* Mêmes constructions que les Lemmes 4, 5 : chaque chemin construit contient V(P) ∋ x₀, donc est dans 𝒫. □
+**H1.9 (position de c).** Sous H1.8(c) : c = x_k avec 2 ≤ k ≤ m−1, et {x₁,…,x_{k−1}} ⊆ C₁, {x_{k+1},…,x_m} ⊆ C₂ (à renommage près).
+*Preuve.* c ∉ V(P) ⇒ P dans une composante, m ≤ 2σ : exclu par H1.8(d). c = x₁ ⇒ x₂…x_m dans une composante C, or c a un voisin dans l'autre (H1.2b), hors de P : contredit H1.8(a). Si les deux segments sont dans la même composante C : m ≤ |C| + 1 ≤ 2σ+1, donc égalité : |C| = 2σ, V(P) = C ∪ {c}, deg x₁ = deg x_m = σ, I₁ ⊔ I_m = [1, m−1]. Un y ∈ N(c) ∩ C' (C' l'autre composante) est hors de P et y ~ x_k : par H1.8(b), k−1 ∉ I_m, donc k−1 ∈ I₁, i.e. x₁ ~ c. Alors x₁ ∈ C ∩ N(c), x₁ ≠ x₀, deg x₁ = σ, |C| = 2σ : contredit H1.7. □
+**H1.10 (comptage).** Dans la configuration H1.9, pour tout y ∈ C₁ \ V(P) : **deg x₁ + deg y ≤ |C₁| − 1 + [y ~ c]**.
+*Preuve.* N(x₁) ⊆ {x₂,…,x_k} (H1.8a, H1.2a), donc I₁ ⊆ [1,k−1], |I₁| = deg x₁. N(y) ∩ V(P) = {x_j : j ∈ J}, J ⊆ [2,k] (H1.8b, H1.2a). Pour j ∈ J' := J ∩ [2,k−1] : x₁ ≁ x_{j+1}, i.e. j ∉ I₁. Donc |I₁| + |J'| ≤ k − 1 = |C₁| − |R₁| (R₁ = C₁ \ V(P)). Et deg y ≤ |J'| + [y ~ c] + (|R₁| − 1). On somme. □
+**H1.11 (conclusion).** Si y ∈ R₁ : H1.10 + H1.8(d) donnent 2σ ≤ |C₁| − 1 + [y~c] ≤ 2σ − 1 + [y~c], donc y ~ c, |C₁| = 2σ et deg y = σ : contredit H1.7 (y ≠ x₀). Donc R₁ = ∅ ; de même R₂ = ∅ (P renversé est dans 𝒫, mêmes hypothèses). Par H1.3b, V = C₁ ∪ C₂ ∪ {c} ⊆ V(P) : m = n, contradiction. Donc le plus long chemin de 𝒫 est hamiltonien. **H1 est démontrée.** □
+
+### H1.2 Réponses aux trois questions du brief
+1. **Structure « clique K_{σ+1} d'un côté » : fausse sans diamètre 3.** Contre-exemples de diamètre 4 : `HCdbBNp`, `HCdbEhf`, `HQhTQjw` (n=9), `J?ouPjILT{?` (n=11) : aucun côté C ∪ {c} n'est une clique. Elle ne vaut que dans le cas limite |C'| = σ, x₀ ∉ C' (H1.6). Elle n'est plus utilisée.
+2. **Diamètre.** diam ≥ 3 est prouvé (Cor. 2a : diam ≤ 2 ⇒ n ≤ 2σ+1). Observé : ecc(c) ≤ 2 dans chaque composante pour les 70 graphes de H1 (n ≤ 11) et pour les 1 630 « côtés » enracinés admissibles à ≤ 8 sommets ; d'où diam ∈ {3, 4}, et le diamètre 4 est atteint (n = 7, 9, 10, 11 ; 49 des 70 graphes). Une preuve de ecc(c) ≤ 2 a été esquissée (D2 + comptages de Γ par parité), **non rédigée ni relue** : inutile pour H1.
+3. **Ore / recouvrement par chemins : inutile pour H1.** Pour mémoire (Prop. K, étape 6) : *si H a k sommets et deg u + deg v ≥ k − q pour u ≁ v (q ≥ 1), V(H) se recouvre par ≤ q chemins disjoints.* Preuve courte : H ∨ K_{q−1} (N = k+q−1 sommets) a σ₂ ≥ (k−q) + 2(q−1) = N − 1 ; il est connexe, et un plus long chemin non hamiltonien contredirait le Lemme 4 (deg x₁ + deg x_m ≤ m − 1 ≤ N − 2 avec x₁ ≁ x_m) ; on retire les q−1 sommets ajoutés. En Lean ce serait `lemma4` appliqué au joint. Mais la Prop. K est désormais un cas particulier de H1.0 (elle suppose δ ≥ 2).
+
+### H1.3 Vérifications numériques (scripts `wowii/h1/`)
+- `verh1.py` : les **70 graphes de H1 pour n ≤ 11** (n=7:3, 9:15, 10:5, 11:47), 182 choix de x₀ × sommets d'articulation : δ ≥ 2, n ≤ 3σ+1, exactement 2 composantes, σ ≤ |Cᵢ| ≤ 2σ, D2, H1.6, prémisse de H1.7 jamais réalisée, plus long chemin de 𝒫 hamiltonien : **0 violation**.
+- `core.py`, `core2.py` (sans (H), tous les graphes connexes avec sommet d'articulation, n ≤ 9, tout x₀ de degré min., **tous** les plus longs chemins de 𝒫) : H1.8(a)(b)(c) et l'inégalité H1.10 (17 992 cas pour n=9, 960 pour n=8) : **0 violation**. (Une première version du test codait à tort « |C₁| ≥ 2σ » sans l'hypothèse |C₁| ≤ 2σ : 176 « violations » à n=8, toutes conformes à l'énoncé correct |C₁| ≥ 2σ+1−[y~c].)
+- `pureF.py` (sans (H)) : D2, H1.6, H1.7 sur graphes recollés |C| = 2σ, |C'| = σ, σ = 2, 3 (12 177 graphes, 29 026 cas H1.7) : **0 violation**.
+- `glue.py` (énumération exacte de H1 par recollement de deux côtés au sommet c ; (H) se découple : Γ(v) = Γ_{B₁}(v) + o₂ ou e₂, Γ(c) = E₁ ∪ E₂) ; validée par `gluex.py` qui retrouve exactement les classes connues (n = 7, 9, 10). **n = 12 (σ=4) et n = 13 (σ = 4, 5) : 0 graphe non traçable** (291, 122, 469 graphes étiquetés).
+- `side.py` : lemme « côté » isolé (B enraciné en c, contraintes (H) découplées) : chemin hamiltonien depuis c pour les 1 630 côtés admissibles à ≤ 8 sommets.
+
+### H1.4 Plan Lean (estimation)
+| Lemme | Contenu | Lignes |
+|---|---|---|
+| H1.1 | feuille ⇒ n ≤ 2σ+2 (identité E(x₀)+E(c') = n) | 80–150 |
+| H1.2 | composantes de `G.induce {x ∣ x ≠ c}`, voisinages, d(u,w) = d(u,c)+d(c,w) | 250–400 (le coût principal) |
+| H1.3 | Lemme 6a, 6b (comptage de Γ) | 200–300 |
+| H1.4–H1.6 | tailles, D2, côté minimal | 150–250 |
+| H1.7 | contradiction cas limite | 120–200 |
+| H1.8 | famille 𝒫 : `exists_longest` avec prédicat ; `lemma4`, `lemma5ab` avec `hmax` restreint aux listes contenant V(l) ; rotation | 150–300 (surtout adaptation) |
+| H1.9–H1.11 | position de c, comptage, assemblage | 300–500 |
+Total ≈ **1 250–2 100 lignes**. Réutilisé du fichier R2 : `degree_pair` (Fait 0), `exists_longest`, `lemma4`, `lemma5ab` (en remplaçant l'hypothèse `hmax` « tout chemin » par « tout chemin dont les sommets contiennent ceux de l », plus faible, que les preuves existantes devraient déjà satisfaire, à vérifier), `dist_two`, `lemma3a`, `rot`, `ham_of_list`, `getD_*`, le schéma de rotation de `caseB_aux`. Non nécessaires : `lemma5c`, `lemma3b`, `caseA`, `theorem_C`, Ore, Proposition K.
+
+## Étape H2 — cas 2-connexe (feuille `H2` du fichier R2) : **réduite à n ≥ 2σ+5, non close**
+
+### H2.0 Verdict
+Pas de preuve complète de H2. **Prouvé (nouveau)** : **Théorème D** : G connexe, (H), **n ≤ 2σ+4** ⇒ traçable (sans 2-connexité ; donc vaut aussi pour H1). Pour n = 2σ+5 il ne reste que : P plus long chemin contenant x₀, m = 2σ+2, G − V(P) = un triangle. H2 reste ouvert pour n ≥ 2σ+5. Réduction structurelle : **Claim C ⇒ H2 pour tout n**, Claim C vérifié exhaustivement (2-connexes, n ≤ 10).
+Scripts et sorties : `wowii/h2/` (`lp*.c`, `cl*.c`, `hc.c`, `tight.c`, `chk.py`, `t1.py`, `t3.py`).
+
+### H2.1 Cadre « x₀-plus long » (astuce de l'Étape H1)
+P = x₁…x_m est **le plus long parmi les chemins contenant x₀** ; R = V \ V(P), donc **x₀ ∉ R** et tout sommet de R a degré ≥ σ (Fait 0). Les Lemmes 4, 5a–c, (R4), (R6) restent vrais pour P (leurs opérations — prolongement, rotation, insertion, ouverture d'un cycle sur V(P) — donnent des chemins ⊇ V(P) ∋ x₀ ; (R4) et (R6) n'utilisent en plus que le Lemme 6a). Si x₀ = x₁ et deg x₀ ≥ 2, x₀ ~ x_j (j ≥ 3) et la rotation x_{j−1}…x₂x₀x_j…x_m garde V(P) : on suppose x₁, x_m ≠ x₀. En régime n ≥ 2σ+3 (δ ≥ 2) et G non traçable : **m ≥ 2σ+2**, donc |R| ≤ n − 2σ − 2.
+*Mise en garde* : une opération qui **retire** un sommet x_i de P n'est licite que si x_i ≠ x₀.
+
+### H2.2 Lemme P (composante de G − P, version chemin de (**))
+K composante de G[R], y ∈ K avec c(y) := |N_P(y)| ≥ 1, k(y) := |N_K(y)|, K₂(y) := K ∩ L₂(y), B_y := N_P(K \ {y}) \ N_P(y).
+(a) [insertion] si y ~ x_j et u ∈ K \ {y} alors u ≁ x_{j±1} (sinon x_j y ⋯ u x_{j±1} insère ≥ 2 sommets).
+(b) Γ(y) ⊇ N_P(y)^± ⊔ K₂(y) ⊔ B_y, avec |N_P(y)^±| = 2c(y) − #{j : j, j+2 ∈ J_y} ≥ c(y)+1 (égalité ssi J_y est une progression de pas 2) ; les trois ensembles sont à distance exactement 2 de y et disjoints par (a).
+(c) (H) et deg y = c + k ≥ σ ⇒ **1 + |K₂(y)| + |B_y| ≤ k(y)**.
+*Corollaire.* G − P n'a pas de composante singleton (k = 0 : Lemme 5c) ni **P₃** (extrémité u : k = 1, c ≥ 1 car deg u ≥ σ ≥ 2, et K₂(u) ∋ w).
+
+### H2.3 Lemme E′ (pas de composante arête)
+G − P n'a pas de composante K = {y, z}. *Preuve.* c(y) ≥ 1 (sinon deg y = 1 < δ). (c) avec k = 1 : B_y = ∅, |N_P(y)^±| = c(y)+1 = σ (car σ ≥ |Γ(y)| ≥ c+1 et c + 1 = deg y ≥ σ), donc N_P(z) ⊆ N_P(y), J_y progression de pas 2 ; symétriquement N_P(y) = N_P(z) =: {x_j, x_{j+2}, …, x_{j+2(c−1)}}, c = σ − 1.
+- c ≥ 3 : parmi les c−1 ≥ 2 trous x_{i+1} (i, i+2 ∈ J), l'un est ≠ x₀ ; x₁…x_i z y x_{i+2}…x_m contient x₀ et a m+1 sommets. Contradiction.
+- c = 2 (σ = 3) : seul trou x_{j+1} ; s'il est ≠ x₀, idem. S'il vaut x₀ : x₀ ≁ x_{j−1} (sinon x₁…x_{j−1}x₀x_j y z x_{j+2}…x_m, m+2 sommets) et x₀ ≁ x_{j+3} (symétrique) ; donc y, z, x_{j−1}, x_{j+3} ∈ L₂(x₀) : |Γ(x₀)| ≥ 4 > σ. Contradiction.
+- c = 1 (σ = 2) : x_j sépare {y,z} du reste ⇒ n ≤ 3σ+1 = 7 (Lemme 6a), or n ≥ m+2 ≥ 2σ+4 = 8. □
+
+### H2.4 Théorème D (n ≤ 2σ+4)
+G connexe, (H), n ≤ 2σ+4 ⇒ G traçable. *Preuve.* n ≤ 2σ+2 : Théorème C. Sinon δ ≥ 2 (Cor. 1b) ; si G n'est pas traçable, P x₀-plus long (H2.1) a m ≥ 2σ+2, donc |R| ≤ 2 et x₀ ∉ R ; une composante de G[R] est un singleton (Lemme 5c) ou une arête (Lemme E′) : contradiction. □
+**Conséquence n = 2σ+5** : m ∈ {2σ+2, …}, |R| ≤ 3 ; singletons, arêtes, P₃ exclus ⇒ seul reste **m = 2σ+2, G[R] = K₃** (et σ ≥ 4 : n ≤ 11 est couvert par le balayage exhaustif, et n = 11 n'a aucun graphe de (H) avec σ = 3). Contraintes déjà obtenues pour K = {u,v,w} (Lemme P, σ ≥ 4) : c(y) ∈ {σ−2, σ−1}, |A| ≤ σ−1 (A = N_P(K)), chaque y voit tout A sauf ≤ 1 sommet ; si un y a c(y) = σ−1, deux attaches consécutives d'écart 2 portées par deux sommets distincts de K et un trou ≠ x₀ donnent x_p y v' y' x_{p+2} (m+2 sommets) : contradiction. Donc deg y = σ pour y ∈ K ; deux attaches consécutives de A portées par deux sommets distincts sont à distance ≥ 4 sur P sauf le trou contenant x₀. Non terminé.
+
+### H2.5 Faits auxiliaires (plus longs chemins globaux, R = {x₀})
+Valables si un plus long chemin (global) a m = n−1 sommets : (F1) tout plus long chemin manque exactement x₀ (Lemme 5c) ; (F2) x₀ ≁ q₂, q_{m−1} pour tout plus long chemin Q ; (F3) x₀ ~ x_j ⇒ x₁ ≁ x_{j+1}, x_{j+2} et x_m ≁ x_{j−1}, x_{j−2}. (G) Avec Z = [1, m−1] \ (I₁ ∪ I_m) : si j < j' ∈ N_P(x₀), x₁ ~ x_j et x_m ~ x_{j+1}, alors x_{j−1}…x₁x_jx₀x_{j'} + cycle x_{j+1}…x_mx_{j+1} est hamiltonien (symétrique pour j' < j) ; donc j ≠ max ⇒ Z ∩ {j±1} ≠ ∅, j ≠ min ⇒ Z ∩ {j−2, j} ≠ ∅, et **d₁ + d_m ≤ m − 2**. Cela donne une seconde preuve (par configurations) du cas n = 2σ+3 et ferme le « trou (ii) » de la §4 ; constructions testées aléatoirement (`chk.py` : 9 719 instances, 0 échec).
+
+### H2.6 Réduction structurelle : Claim C (angle 1)
+**Claim C.** G 2-connexe non traçable, P plus long chemin (global) d'extrémités x₁, x_m ⇒ max(|Γ(x₁)|, |Γ(x_m)|) ≥ σ+1. Claim C contredit (H) directement : **Claim C ⇒ H2 pour tout n** (sans n ≥ 2σ+3). Variante plus faible suffisante : Claim A (un plus long chemin a une extrémité avec |Γ| > σ).
+Tests (exhaustifs, `nauty-geng -C`) : n ≤ 9 : 0 échec ; **n = 10 : 9 743 542 graphes 2-connexes, 36 076 non traçables, 0 échec de C, A, et de B** (une extrémité v avec |Γ(v)| > deg v). Recherche locale (`hc.c`, n = 12, 13, 14) : marge minimale 1, aucun contre-exemple.
+- La 2-connexité est nécessaire : C échoue sur des graphes connexes (n = 7 : 1, n = 8 : 8).
+- **Versions locales fausses à n = 10** (vraies n ≤ 9) : σ remplacé par le 2e plus petit degré de {x₁, x_m} ∪ R (56 chemins), par min_{y∈R} deg y (192), |Γ(x₁)|+|Γ(x_m)| ≥ 2deg y+1 (256), « une extrémité a |Γ| > son degré » (34 graphes), et pour m = n−1 « max|Γ| > min(d₁,d_m) » (28). Exemple `I?`CQJw|?` : σ = 2 est atteint par des extrémités de rotation (sommets 6, 7) **sur** P. Une preuve de C doit donc utiliser le σ global (rotations de Pósa), pas seulement x₁, x_m, R.
+
+### H2.7 Angles 2 et 3 (données, n ≤ 11)
+- Tous les graphes 2-connexes du régime n ≥ 2σ+3 sont **hamiltoniens** (n = 7 : 2, 9 : 85, 10 : 24, 11 : 7 139) et contiennent un triangle (n = 9, 11).
+- Hérédité (n = 11, 7 139 graphes 2-connexes) : G − x₀ vérifie (H) pour 6 686 (453 échecs) ; un G − v vérifie (H) : 6 981 (158 échecs), dont seulement 435 restent dans le régime ; une contraction d'arête préserve (H) : 7 123 (16 échecs). Pas de récurrence naturelle.
+
+### H2.8 Trou exact
+H2 restant : G 2-connexe, (H), **n ≥ 2σ+5**. Énoncé minimal (cadre x₀-plus long) : aucune composante K de G − V(P) avec |K| ≥ 3, K ≇ P₃ (tous ses sommets de degré ≥ σ, ≥ 2 attaches). Premier cas ouvert : n = 2σ+5, K = K₃, m = 2σ+2, σ ≥ 4. Alternative globale : prouver Claim C (ou A).
+Lean : Théorème D ≈ Théorème C + 400–700 lignes (cadre x₀-plus long partagé avec H1, Lemme P(a–c), Lemme E′).
