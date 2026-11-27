@@ -262,3 +262,155 @@ Tests (exhaustifs, `nauty-geng -C`) : n ≤ 9 : 0 échec ; **n = 10 : 9 743 542 
 ### H2.8 Trou exact
 H2 restant : G 2-connexe, (H), **n ≥ 2σ+5**. Énoncé minimal (cadre x₀-plus long) : aucune composante K de G − V(P) avec |K| ≥ 3, K ≇ P₃ (tous ses sommets de degré ≥ σ, ≥ 2 attaches). Premier cas ouvert : n = 2σ+5, K = K₃, m = 2σ+2, σ ≥ 4. Alternative globale : prouver Claim C (ou A).
 Lean : Théorème D ≈ Théorème C + 400–700 lignes (cadre x₀-plus long partagé avec H1, Lemme P(a–c), Lemme E′).
+
+## Étape H2 — Manche 2 : **conjecture prouvée pour n ≤ 2σ+6 ; H2 ouvert pour n ≥ 2σ+7**
+
+### M2.0 Verdict
+Pas de preuve complète de H2. **Nouveau (prouvé)** : **Théorème D⁺** : G connexe, (H), **n ≤ 2σ+5** ⇒ traçable (sans 2-connexité), étendu en M2.7 à **n ≤ 2σ+6 (Théorème D⁺⁺)**. Le régime n ≥ 2σ+5 est **non vide dès n = 13** et **n − 2σ n'est pas borné** (≈ 0,4 n) : une analyse cas par cas sur |R| = n − m ne peut pas conclure seule. Le trou exact est donné en M2.5. Scripts : `wowii/h2m2/`.
+Cadre : celui de H2.1 (P le plus long parmi les chemins contenant x₀, extrémités ≠ x₀, m ≥ 2σ+2, x₀ ∉ R, tout sommet de R de degré ≥ σ).
+
+### M2.1 Lemmes généraux (tout n ≥ 2σ+3, G non traçable)
+**(Q1) Lemme des régions.** K composante de G[R], attaches A = N_P(K) = {x_{a₁}, …, x_{a_r}}, a₁ < … < a_r, r ≥ 2 par (R6). (i) Si y ~ x_{a₁} et si K contient un chemin à h sommets finissant en y, alors a₁ − 1 ≥ h, ou x₀ ∈ {x₁,…,x_{a₁−1}} ; même chose à droite. (ii) Si y ~ x_{a_i}, y' ~ x_{a_{i+1}}, y ≠ y', et si K contient un chemin y→y' à h sommets, alors a_{i+1} − a_i − 1 ≥ h, ou x₀ est strictement entre les deux. *Preuve.* Remplacer le segment retiré (qui ne contient pas x₀) par le chemin de K donne un chemin plus long contenant x₀. □
+**(Q2) Lemme P précisé.** Pour y ∈ K avec c(y) ≥ 1 : c(y) + 1 + g(y) + |K₂(y)| + |B_y| ≤ σ ≤ c(y) + k(y), où g(y) est le nombre de paires d'attaches consécutives de y d'écart ≥ 3 sur P (car |N_P(y)^±| = c + 1 + g).
+**(Q3) Composantes.** Toute composante K a |K| ≥ 3 et δ(G[K]) ≥ 2. En effet, un sommet y avec k(y) = 1 a soit c(y) = 0 (deg 1), soit c(y) ≥ 1 et donc K₂(y) = ∅ par (Q2) : alors K = {y, z} est une arête, exclue par E′. Sont donc exclus P₃, P₄, K_{1,3}, la patte (paw), etc. : K contient un cycle.
+**(Q4) Triangle.** Si K = K₃ = {u, v, w}, alors σ ≤ 5 (pour tout n). *Preuve.* c(y) = deg y − 2 ∈ [σ−2, σ−1] et g(y) + |B_y| ≤ 1 (Q2). Chaque sommet de K manque au plus une attache, donc deux attaches consécutives de A sont portées par deux sommets distincts (sinon les deux autres en manquent deux). Par (Q1ii) avec h = 3, tout écart de A vaut ≥ 4, sauf celui qui contient x₀. Si c(y) = σ−1 : N_P(y) = A est une progression de pas 2 à σ−2 écarts, dont un seul peut contenir x₀, donc σ ≤ 3. Sinon c(y) = σ−2 pour tout y. Si un y voit tout A : g(y) ≥ r − 2, donc r ≤ 3 et σ ≤ 5. Si tous ont |B_y| = 1 : g(y) = 0, tous les écarts de y valent 2, donc y a au plus un écart, c(y) ≤ 2 et σ ≤ 4. □
+
+### M2.2 Théorème D⁺ (n = 2σ+5)
+Si G n'est pas traçable : m ≥ 2σ+2, donc |R| ≤ 3. Singletons, arêtes et P₃ sont exclus (Lemme 5c, E′, Q3), donc **R = K₃ et m = 2σ+2**. Soit r = |A| ≥ 2. Les régions extrêmes ont ≥ 3 sommets, ou ≥ 2 si elles contiennent x₀ (x₁, x_m ≠ x₀).
+- **σ = 2** : m = 6. Or m ≥ r + 3 + 3 + 1 = 9 si x₀ ∈ A ou si x₀ est au milieu, et m ≥ r + 2 + 1 + 3 = 8 si x₀ est dans une région extrême. ✗
+- **σ ≥ 3** : c(y) ≥ 1 et |B_y| ≤ 1 pour tout y ∈ K, donc les attaches consécutives sont portées par des sommets distincts. Par Q1 avec h = 3, les r+1 régions ont ≥ 3 sommets, sauf celle de x₀ (≥ 1) : **m ≥ 4r + 1**, avec r ≥ max(2, σ−2). Pour σ = 3 : 9 ≤ 8 ✗. Pour σ ≥ 5 : 4σ − 7 ≤ 2σ + 2 ✗.
+- **σ = 4** (n = 13, m = 10) : r = 2 (r = 3 donnerait 13 > 10), donc N_P(y) = A = {x_p, x_q} et deg y = 4 pour u, v, w.
+ (a) q = p+2 : l'écart d'un seul sommet contient x₀ = x_{p+1}. On a x₀ ≁ x_{p−1}, sinon x₁…x_{p−1} x₀ x_p u v w x_{p+2}…x_m est plus long ; de même x₀ ≁ x_{p+3}. Donc Γ(x₀) ⊇ {u, v, w, x_{p−1}, x_{p+3}} : 5 > 4. ✗
+ (b) q ≥ p+3 : Γ(u) ⊇ {x_{p±1}, x_{q±1}}, 4 = σ sommets, donc égalité. Les régions (p−1, q−p−1 ≥ 2, m−q) totalisent 8 ; celles sans x₀ ont ≥ 3 sommets, donc x₀ ∉ A et la région de x₀ a exactement 2 sommets.
+  - x₀ à gauche : p = 3, x₀ = x₂, q = 7. x₁ ≁ x₃, x₇ (sinon x₁ ∈ L₂(u)), x₁ ≁ x₄, x₈ (5b), x₁ ≁ x₁₀ (Lemme 4). Comme deg x₁ ≥ 4 : x₁ ~ x₅, et u v w x₃ x₂ x₁ x₅…x₁₀ a 12 sommets et contient x₀. ✗ (À droite : symétrique.)
+  - x₀ au milieu : p = 4, q = 7, x₀ ∈ {x₅, x₆} ; par symétrie x₀ = x₅. x₅ ≁ x₃ (sinon x₁x₂x₃x₅x₄uvwx₇…x₁₀ a 12 sommets). Donc Γ(x₅) ⊇ {u, v, w, x₃}. Si x₅ ≁ x₇ : x₇ ∈ L₂(x₅), 5 > 4. Si x₅ ~ x₇ : x₅ ≁ x₈ (sinon x₁x₂x₃x₄uvwx₇x₆x₅x₈x₉x₁₀ est hamiltonien), donc x₈ ∈ L₂(x₅), 5 > 4. ✗ □
+
+### M2.3 Piste 1 (régime n ≥ 2σ+5) : données
+- **Éclatés de C₅, C₇, C₉** (`blow.c` : classes cliques ou stables, tailles ≤ 9/6/4). Le régime n − 2σ ≥ 5 apparaît dès **n = 13** : C₇ de classes [1, 2K, 2S, 2K, 2K, 2S, 2K] (K = clique, S = stable), σ = 4, κ = 3, diam 3, hamiltonien, vérifié directement. Valeurs max de n − 2σ : 7 à n = 17 (C₇[2,2,2,2,3,3,3], cliques, σ = 5, donc **n = 3,4σ > 3σ+1**), 11 à n = 27, 13 à n = 33 et 37 ; rapport n/σ ≈ 3,3–3,4 ; les meilleurs sont toujours des éclatés de C₇.
+- n = 12 : la recherche locale (`hcreg.c`, 400 essais) ne trouve aucun graphe de (H) avec σ ≤ 3 ; n = 11 : aucun (balayage exhaustif). Le plus petit n du régime est donc probablement 13 (non prouvé pour n = 12).
+- **Pas de structure d'éclaté** : à n = 13, la recherche locale trouve des graphes du régime à 8, 10 et 11 classes de jumeaux vrais, κ = 3, tous hamiltoniens. Le lemme « n ≥ 2σ+5 ⇒ éclaté d'un cycle impair » est donc faux au sens des jumeaux.
+- La borne n ≤ 3σ+1 (vraie avec un sommet d'articulation, Lemme 6a) est **fausse en 2-connexe**.
+
+### M2.4 Piste 2 (Pósa) : données
+S = extrémités atteignables par rotations depuis x₁ (x_m fixé), sur les graphes 2-connexes non traçables (n = 8 : 684 chemins ; n = 9 : 8 730 ; n = 10 : 1 500, échantillon de 250 graphes). Lemme de Pósa |N(S)| ≤ 2|S|−1 : 0 échec. **Σ_{s∈S} |Γ(s)| > σ|S| : 0 échec** (moyenne de Claim A sur S). Échecs des autres essais : |Γ(x₁)| ≥ |S| (22 / 317 / 72), |S| ≥ σ+1 (362 / 3 518 / 631), max_S |Γ| ≥ |S| (0 / 43 / 5), Σ_S (|Γ(s)| − deg s) > 0 (15 / – / 5). Le σ global reste indispensable ; aucune preuve par comptage sur S n'a été trouvée.
+
+### M2.5 Trou exact (mis à jour par M2.7 : **n ≥ 2σ+7**)
+G 2-connexe, (H), **n ≥ 2σ+6**. Il faut exclure, dans le cadre x₀-plus long, toute composante K de G[R] telle que |K| ≥ 3, δ(G[K]) ≥ 2, K ≠ K₃ si σ ≥ 6, et (Q1), (Q2) vérifiés. Prochain cas, n = 2σ+6 : R = K₃ avec m = 2σ+3 (Q1 ⇒ σ ≤ 5), ou R ∈ {C₄, diamant, K₄} avec m = 2σ+2. Comme n − 2σ n'est pas borné, il faut une borne supérieure n ≤ Cσ (observé n ≤ 3,4σ) combinée à (Q1), ou Claim C / Claim A.
+
+### M2.6 À faire relire (dans le cadre x₀-plus long)
+Hérités : Cor. 1b (δ ≥ 2), Lemme 4, Lemme 5a/5b/5c, Lemme 6a, (R4) (m ≥ 2σ+2 ; son cas m = 2σ+1 utilise 6a), (R6). Nouveaux : Lemme P et (Q2), E′, (Q1), (Q3), (Q4), Théorème D, Théorème D⁺ (cas σ = 4).
+
+### M2.7 Théorème D⁺⁺ (n = 2σ+6)
+G connexe, (H), n = 2σ+6 ⇒ traçable. Cadre x₀-plus long, |R| ≤ 4. Deux outils locaux :
+- **(E) astuce d'extrémité.** Si x₁ ~ x_j avec j > a₁, le chemin [K parcouru jusqu'à un sommet attaché à x_{a₁}] x_{a₁} x_{a₁−1} … x₁ x_j … x_m a |K| + a₁ + m − j + 1 sommets ; s'il contient x₀ et dépasse m, contradiction. Symétrique pour x_m.
+- **(C) comptage d'extrémité.** N(x₁) ⊆ P \ ({x_{a+1} : a ∈ A} (5b) ∪ {x_m} (Lemme 4) ∪ (E)), et on retire aussi A quand Γ(u) est « exact » (|Γ(u)| = σ déjà atteint par N_P(u)^±) ; on compare à deg x₁ ≥ σ.
+**Cas B : R = K₃, m = 2σ+3.**
+- σ ≥ 6 : exclu par (Q4).
+- σ = 2 : m ≥ 8 > 7.
+- σ = 3 : 4r+1 ≤ 9 force r = 2 et x₀ seul dans l'écart médian d'un sommet ; alors Γ(x₀) ⊇ K ∪ {x_{p−1}, x_{p+3}} : 5 > 3.
+- σ = 5 : r = 3 et les régions valent (3, 1, 3, 3), donc A = {x₄, x₆, x₁₀}, x₀ = x₅ (ou le miroir). Γ(u) = {x₃, x₅, x₇, x₉, x₁₁} est exact. (C) force N(x₁) = {x₂, x₃, x₈, x₉, x₁₂} et N(x₁₃) = {x₂, x₇, x₈, x₁₁, x₁₂}, donc x₁ ~ x₃ et x₁₃ ~ x₂ : contredit le Lemme 4.
+- σ = 4 (m = 11) : r = 2, N_P(y) = A = {x_p, x_q} pour tout y.
+ - q = p+2 : Γ(x₀) ≥ 5.
+ - x₀ ∈ A : deg x₀ ≥ 5 > σ ≥ δ.
+ - Sinon Γ(u) = {x_{p±1}, x_{q±1}} est exact ; les régions (gauche, milieu, droite) totalisent 9, celles sans x₀ ont ≥ 3 sommets.
+  - x₀ à gauche, (p, q) = (3, 7) ou (3, 8) : (C) ne laisse que 3 voisins à x₁.
+  - x₀ à gauche, (p, q) = (4, 8), x₀ ∈ {x₂, x₃} : (C) ne laisse que {x₂, x₃, x₁₀}.
+  - x₀ au milieu, (p, q) = (4, 7), x₀ = x₅ : x₅ ≁ x₃ ; Γ(x₅) ⊇ {u, v, w, x₃} ; x₅ ~ x₇ est forcé, puis x₅ ~ x₈ donne un chemin hamiltonien, et sinon |Γ(x₅)| = 5.
+  - x₀ au milieu, (p, q) = (4, 7), x₀ = x₆ : symétrique via x₈, x₄, x₃.
+  - x₀ au milieu, (p, q) = (4, 8), x₀ = x₅ (x₇ : miroir) : x₃ ∈ Γ ; x₅ ~ x₇ et x₅ ~ x₈ sont forcés, puis x₅ ~ x₉ donne un chemin hamiltonien, et sinon 5.
+  - x₀ au milieu, (p, q) = (4, 8), x₀ = x₆ : (C) force N(x₁) = {x₂, x₃, x₇, x₁₀} et N(x₁₁) = {x₂, x₅, x₉, x₁₀}, donc croisement x₁ ~ x₃, x₁₁ ~ x₂ : Lemme 4.
+ - x₀ à droite : miroir de x₀ à gauche.
+**Cas A : |R| = 4, m = 2σ+2, R connexe de degré min ≥ 2 : C₄, diamant, K₄.**
+- **C₄ et diamant** : un sommet z de degré 2 dans K a K₂(z) ≠ ∅, donc (Q2) donne g = |B| = 0 et c = σ−2. Ainsi N_P = A pour ces sommets, en progression de pas 2. Chaque écart est porté par deux sommets reliés par un chemin de K à 4 sommets, donc contient x₀ : r = 2 et σ = 4. Les régions extrêmes ont alors ≥ 4 sommets, d'où m ≥ 2 + 1 + 4 + 4 = 11 > 10. σ = 3 donne r = 1, contraire à (R6). σ = 2 donne m ≥ 9 > 6.
+- **K₄** : pour σ ≤ 3, m ≥ r + 4 + 2 + 1 ≥ 9 > 2σ+2. Pour σ ≥ 4, |B_y| ≤ 2 ; un écart « non croisé » (deux attaches privées d'un même y) force les trois autres sommets à manquer ces deux attaches, d'où au plus un tel écart et **m ≥ 5r − 2** avec r ≥ σ−3, donc σ ≤ 6.
+ - σ = 6 : r = 3, m ≥ 16 > 14.
+ - σ = 4 : r = 2 et les régions totalisent 8, avec deux régions ≥ 4 et la région de x₀ ≥ 1 ou 2 : impossible.
+ - σ = 5 (m = 12, r = 2, tout y voit A = {x_p, x_q}) :
+  - q = p+2 : Γ(x₀) ≥ 6.
+  - x₀ ∈ A : deg x₀ ≥ 6.
+  - x₀ à gauche (p, q) = (3, 8) : (C) force N(x₁) = {x₂, x₃, x₈, x₁₀, x₁₁}, donc Γ(u) = {x₁, x₂, x₄, x₇, x₉} est exact, et (C) ne laisse à x₁₂ que {x₉, x₁₀, x₁₁}.
+  - x₀ au milieu (p, q) = (5, 8), x₀ = x₆ (x₇ : miroir) : Γ(x₆) ⊇ K ∪ {x₄} (x₆ ~ x₄ donnerait un chemin plus long) ; x₆ ~ x₈ est forcé, puis x₆ ~ x₉ donne un chemin hamiltonien, et sinon 6. □
+**Statut.** Toutes les étapes sont des constructions explicites de chemins ou des comptages de Γ. Ce n'est pas vérifié par machine : la longueur de la casuistique la rend sujette à erreur, une relecture ligne à ligne est nécessaire. Le trou passe à **n ≥ 2σ+7** : |R| ≤ 5, composantes K₃ (m = 2σ+4), C₄/diamant/K₄ (m = 2σ+3), et les graphes connexes à 5 sommets de degré min ≥ 2 (m = 2σ+2). La méthode ne peut pas finir seule, puisque n − 2σ n'est pas borné (M2.3).
+
+## Manche globale — identité d'arête comme densité locale (cas G 2-connexe, n ≥ 2σ+7)
+
+### MG.0 Verdict
+**Pas de preuve du cas restant.** Nouveau, prouvé : **Lemme T** (toute arête dont les deux extrémités ont degré ≥ σ est dans un triangle, dès n ≥ 2σ+4 sauf (n,σ) = (10,3)), avec sa version structurelle **T₀** (n ≥ 2σ+3). Les pistes Q1 (diamètre 3, beaucoup de triangles) et Q2 (graphe localement connexe, Oberly–Sumner) sont **réfutées** par des graphes explicites du régime n ≥ 2σ+7. Q3 (sommation de l'identité) ne donne rien au-delà de l'inégalité arête par arête. N'utilise ni le Lemme P(b) ni (Q2) (cf. erratum `verif-D.md`).
+
+### MG.1 Données (scripts `wowii/glob/` : `glob.c` modes `stats`/`blow`/`walk`, `sa.c`, `sa2.c`, `chkT.py`)
+Corpus : exhaustif n ≤ 10 (`geng -c`) + `r189/open11_*.g6` ; `h2m2/r13.txt` ; éclatés de C₅/C₇/C₉ (classes clique/stable) : 28 578 avec n − 2σ ≥ 5 (n = 13–42), 27 589 avec n − 2σ ≥ 7 (n = 17–42) ; marches aléatoires (bascule d'arêtes préservant (H), 2-connexité et le régime), dédoublonnées par `labelg` : **92 929** graphes avec n − 2σ ≥ 5 (n = 13–41, dont 69 517 avec δ < σ) et **51 003** avec n − 2σ ≥ 7 (n = 19–40, dont 37 194 avec δ < σ).
+- Identité d'arête (Lemme 1) : 0 échec ; le minimum de |S_i| − |S_p| − (n − 2σ − 2) vaut 0 partout (inégalité serrée).
+- **Diamètre** : ≤ 4 partout (aussi pour tout graphe de (H), n ≤ 10). Diamètre 4 **dans le régime n ≥ 2σ+7** : 2 306 / 51 003, ex. `T?C[CEA_WxbfW?W?n_ZwE_{AB{JEEREET{Bo` (n = 21, σ = 7, δ = 6) ; à n − 2σ = 5 : `LI[R~P]yR|\IgT` (n = 13).
+- **Triangles** : toutes les arêtes sont dans un triangle pour tous les graphes du régime n ≥ 2σ+5 (y compris les arêtes en x₀ des 106 711 graphes avec δ < σ). Arêtes sans triangle du régime n ≥ 2σ+3 (exhaustif n ≤ 11) : C₇ (n = 7), `ICOcePcL_` (n = 10 = 2σ+4, arêtes 0–7 et 1–8, diam 4), ``J?`DeXs\Dc?`` et ``J?`DtrK}Fo_`` (n = 11 = 2σ+3) ; toutes ont deux extrémités de degré σ ; aucune arête sans triangle n'est incidente à x₀. Toutes les conclusions intermédiaires de T₀ vérifiées sur ces 21 arêtes (`chkT.py`).
+- **Peu de triangles** : min t(uv) = |N(u) ∩ N(v)| vaut 1 à n − 2σ ≥ 7 (marches). Chez les seuls éclatés, il croît (1, 2, 2, 3, 5 pour n − 2σ ≥ 5, 7, 9, 11, 13), mais cela ne se généralise pas.
+- **Connexité locale** : fausse. Localement connexes : 12 861 / 27 589 éclatés, 36 743 / 51 003 graphes de marche (n − 2σ ≥ 7). Sans griffe : 226 / 51 003. Exemple explicite : **C₇[1, 3K, 3S, 3K, 3K, 3S, 3K]** (n = 19, σ = δ = 6, n − 2σ = 7, `R~\r_[NBwB_N?^?B_@o?[_?]?@{?Bw`) ; le voisinage d'un sommet de classe 1 ou S est formé de deux cliques non adjacentes, et deux sommets d'une classe S avec un voisin de la classe suivante forment une griffe. Observation : G[N(v)] a toujours ≤ 2 composantes pour n ≥ 2σ+5 (3 apparaît à n = 11 = 2σ+3). Non prouvé.
+- Tous les graphes du corpus sont traçables (DFS, 0 inconnu).
+- Recuit simulé ciblé (`sa.c`, `sa2.c` : arête en x₀ sans triangle, n = 9–18) : rien trouvé, mais il ne retrouve pas non plus les cas connus à n = 11. Ce n'est donc pas une preuve d'absence.
+
+### MG.2 Lemme T₀ (structure d'une arête sans triangle)
+**Énoncé.** G 2-connexe, (H), n ≥ 2σ+3, uv arête avec deg u, deg v ≥ σ et N(u) ∩ N(v) = ∅. Posons A = N(u)∖{v}, B = N(v)∖{u}. Alors deg u = deg v = σ ; Γ(v) = L₂(v) = A ⊔ {e_v} et Γ(u) = L₂(u) = B ⊔ {e_u} ; ecc(u), ecc(v) ≤ 3 ; e_u ≠ e_v ; V = {u,v} ⊔ A ⊔ B ⊔ {e_u,e_v} ⊔ Z avec Z = L₃(u) ∩ L₃(v) ⊆ N(e_u) ∩ N(e_v), N(Z) ⊆ Z ∪ {e_u,e_v}, |Z| = n − 2σ − 2 ≤ σ − 1 ; donc **n ≤ 3σ+1**. (Structure d'éclaté de C₇ : u, v, B, e_v, Z, e_u, A.)
+*Preuve.* (1) Lemme 1 et (H) donnent |S_i(uv)| ≥ n − 2σ − 2 ≥ 1. Soit w ∈ S_i, à distance d impaire de u et de v ; d ≠ 1 (pas de voisin commun). Sur une géodésique v q₁ q₂ … w, on a q₁ ≠ u et q₂ ∉ A (sinon d(u,w) ≤ d − 1), donc q₂ ∈ L₂(v)∖A. D'où σ ≥ |Γ(v)| ≥ |L₂(v)| ≥ |A| + 1 = deg u ≥ σ : égalités partout, L₂(v) = A ⊔ {e_v}, L₄(v) = ∅, ecc(v) ≤ 3. Symétriquement pour u.
+(2) Un w ∉ {u,v} ∪ A ∪ B est à distance 2 ou 3 de u et de v ; d(v,w) = 2 ⇔ w = e_v, et d(u,w) = 2 ⇔ w = e_u. Le reste est Z.
+(3) Un z ∈ Z a ses voisins dans L₂(v) ∪ L₃(v) ∖ A ⊆ {e_v, e_u} ∪ Z. Son prédécesseur géodésique depuis v est dans L₂(v)∖A = {e_v}, donc z ~ e_v ; de même z ~ e_u. On a S_i(uv) = Z ≠ ∅. Si e_u = e_v, ce sommet sépare Z de u : contradiction avec la 2-connexité. On a donc n = 2 + 2(σ−1) + 2 + |Z|, et (H) est atteinte en u et en v.
+(4) e_u a un voisin a₁ ∈ A (son prédécesseur ≠ v, car d(v,e_u) = 3). Alors Γ(a₁) ⊇ {v} ∪ Z (a₁ ~ e_u ~ z et a₁ ≁ z), donc |Z| ≤ σ − 1. □
+
+### MG.3 Lemme T (triangles)
+**Énoncé.** G 2-connexe, (H), n ≥ 2σ+4, (n,σ) ≠ (10,3). Toute arête uv avec deg u, deg v ≥ σ (c.-à-d. toute arête si δ = σ, toute arête non incidente à x₀ sinon) est dans un triangle. En particulier pour **n ≥ 2σ+5**. Le résultat est serré : `ICOcePcL_` (n = 10) et les cas n = 2σ+3 de MG.1.
+*Preuve.* On part de T₀. (5) |Z| = n − 2σ − 2 ≥ 2, donc Z contient z ≠ x₀, et σ ≤ deg z ≤ |Z| + 1. Ainsi |Z| = σ − 1, n = 3σ+1, et tout z ≠ x₀ de Z voit (Z∖z) ∪ {e_u,e_v} : Z est une clique. Avec A₁ = A ∩ N(e_u) ≠ ∅ et B₁ = B ∩ N(e_v) ≠ ∅, on a **Γ(a) = {v} ∪ Z exactement pour a ∈ A₁** et Γ(b) = {u} ∪ Z pour b ∈ B₁.
+(6) Pour a ∈ A₁ : (a) a est adjacent à tout A∖{a} (voisin commun u) ; (b) d(a,e_v) = 3 (chemin a e_u z e_v, et e_v ∉ Γ(a), e_v ∈ L₃(u)), donc a ≁ B₁ et e_u ≁ e_v ; (c) pour b ∈ B, d(a,b) ≠ 2 : si b a un voisin dans N(a), alors b ~ a. On a les énoncés symétriques pour B₁.
+(7) Il n'y a aucune arête entre A et B. Si a ~ b, prenons a₁ ∈ A₁ : par (6a) et (6c), a₁ ~ b. Prenons b₁ ∈ B₁ : par les versions symétriques, b₁ ~ a₁, ce qui contredit (6b).
+(8) Un a ∈ A∖A₁ a N(a) ⊆ {u} ∪ (A∖a), donc deg a ≤ σ − 1 et a = x₀. Même chose pour B∖B₁. Donc |A₁| + |B₁| ≥ 2σ − 3.
+(9) Pour z ∈ Z, Γ(z) ⊇ A₁ ∪ B₁ (via e_u et e_v), donc 2σ − 3 ≤ σ, σ ≤ 3, n = 3σ+1 ≤ 10. Avec n ≥ 2σ+4, on obtient σ = 3 et n = 10. □
+**Corollaire T′ (cadre x₀-plus long, G non traçable, n ≥ 2σ+5).** (i) Pour toute arête x_jx_{j+1} de P avec x_j, x_{j+1} ≠ x₀, l'ensemble N(x_j) ∩ N(x_{j+1}) est non vide et contenu dans V(P) : un sommet commun dans R s'insérerait. (ii) Pour y ∈ R et x_j ∈ N_P(y)∖{x₀}, il existe w ~ y, x_j avec soit w ∈ K(y), soit w = x_k, |k − j| ≥ 2 et x_jx_k ∈ E. Même énoncé pour un plus long cycle C (G 2-connexe).
+
+### MG.4 Réponses aux trois questions
+1. **Triangles et diamètre.** On a « ≥ 1 triangle par arête » (Lemme T, arêtes hors x₀), mais pas « beaucoup » : min t = 1 à n − 2σ ≥ 7. Le diamètre 3 est **faux** dans le régime (diam 4, n = 21, σ = 7). Le diamètre ≤ 4 est observé partout, non prouvé. Pour une arête sans triangle, les équidistants impairs sont à distance exactement 3 (T₀).
+2. **Connexité locale.** Elle est **fausse** dans le régime : un éclaté de C₇ avec une classe stable ou singleton n'est pas localement connexe, ex. C₇[1,3K,3S,3K,3K,3S,3K]. Il n'est pas non plus sans griffe (seulement 0,4 % du corpus l'est). Oberly–Sumner et Kikust ne s'appliquent pas. L'extension de cycle par triangles échoue aussi : pour un plus long cycle C, le triangle d'une arête d'attache y x_j a son sommet dans K ou forme une corde x_jx_k (T′ ii). Cela ne donne aucune insertion.
+3. **Sommation.** L'identité est linéaire en E. Sommée sur un ensemble F d'arêtes, elle donne Σ_v deg_F(v)·E(v) = |F|·n − Σ_F(|S_i| − |S_p|), c'est-à-dire exactement la somme des inégalités arête par arête. Sur un chemin ou un cycle, le couplage des arêtes alternées n'ajoute rien. Le double comptage global, via les paires (arête, sommet équidistant), s'écrit Σ_w [h_imp(w) − h_pair(w)] ≥ (n − 2σ − 2)·|E|, où h_imp(w) et h_pair(w) comptent les arêtes internes aux couches impaires et paires (≥ 2) de w. Il ne borne pas n, car h_imp(w) ≤ |E| est la seule borne disponible. Restreint aux arêtes d'un sommet v, il redonne n ≤ (deg v + 1)(σ+1), déjà connu. **Aucune borne n ≤ Cσ obtenue** (observé : n ≤ 3,4σ). La seule borne nouvelle est n ≤ 3σ+1 en présence d'une arête sans triangle hors de x₀ (T₀).
+
+### MG.5 Trou exact
+(a) Le cas restant est inchangé : G 2-connexe, (H), n ≥ 2σ+7. On dispose maintenant en plus du Lemme T et de T′. (b) Sous-trou du Lemme T : une arête x₀u avec δ < σ. On obtient seulement : deg u = σ, Γ(x₀) = (N(u)∖x₀) ⊔ {e}, ecc(x₀) = 3, et n ≤ 3σ+1 (via Γ(b₀) ⊇ {u} ∪ W, où b₀ ∈ N(x₀) ∩ N(e) et W = L₃(x₀)∖N(N(u))). Ce sous-trou est vérifié numériquement (aucun cas parmi les 106 711 graphes à δ < σ, ni dans l'exhaustif n ≤ 11), mais non prouvé. (c) Pistes chiffrées sans contre-exemple : diam ≤ 4 ; G[N(v)] a ≤ 2 composantes pour n ≥ 2σ+5. Aucune ne mène à elle seule à un chemin hamiltonien.
+
+## Manche globale 2 — exploitation du Lemme T
+
+### MG2.0 Verdict
+**Pas de preuve du cas restant**, et le sous-cas x₀ du Lemme T n'est **pas fermé** (il est réduit, voir MG2.2). Nouveaux résultats prouvés : le principe d'arête (MG2.1), la structure fine du sous-cas x₀ (MG2.2), et les lemmes de croisement généralisés GC1, GC2 et RL (MG2.3, 0 échec numérique). Combinés au Lemme T, ils ne produisent aucune insertion (MG2.4). Les deux pistes du point 3 ne sont pas prouvées. Le Lemme P(b) et (Q2) sont utilisés **uniquement sous leur forme corrigée** (B'_y = N_P(N_K(y)) ∖ N_P(y)). Scripts : `wowii/glob/` (`sa3.c`, `sa4.c`, `gc.py`, mode `nontr` de `glob.c`).
+
+### MG2.1 Principe d'arête (trivial, sert partout)
+Pour toute arête xy : N(x) ∖ N[y] ⊆ L₂(y) ⊆ Γ(y). Sous (H), on a donc deg x ≤ σ + 1 + t(xy) − |Γ(y) ∖ N(x)|.
+
+### MG2.2 Sous-cas x₀ du Lemme T (arête ux₀ sans triangle, δ < σ, n ≥ 2σ+5) : réduction
+Notations (MG.5 b) : A = N(u)∖x₀, B = N(x₀)∖u, L₂(x₀) = A ⊔ {e}, L₃(x₀) = Y ⊔ W avec Y = L₃(x₀) ∩ N(A), b₀ ∈ B ∩ N(e), A_e = A ∩ N(e).
+Faits **prouvés** :
+- (a) |W| ≤ σ − 1, car Γ(b₀) ⊇ {u} ∪ W.
+- (b) Tout w ∈ W a ≥ σ − |W| ≥ 1 voisins dans Y (N(w) ⊆ {e} ∪ Y ∪ W, deg w ≥ σ). Donc W ⊆ L₃(u), ecc(u) = 3 et Γ(u) = L₂(u) = B ∪ Y ∪ ({e} si A_e ≠ ∅). On a S_i(ux₀) = W et **|W| ≥ n − 2σ − 2 + [A_e ≠ ∅] ≥ 3**, et |Y| ≤ σ − δ + 1 − [A_e ≠ ∅].
+- (c) Pour a ∈ A ∩ N(b₀), le principe donne Γ(b₀) ⊇ W ⊔ (N(a)∖N[b₀]), donc **t(ab₀) ≥ |W| − 1 ≥ 2**.
+- (d) Comme Γ(u) + Γ(b₀) ≤ 2σ : n ≤ 3σ + 1 − [A_e ≠ ∅] − |Y ∩ L₂(b₀)| − |B∖N[b₀]| − |A ∩ L₂(b₀)|. En particulier n ≤ 2σ + δ + |Y∖L₂(b₀)| − |B∖N[b₀]|. **Ce sous-cas est donc fermé si Y ⊆ L₂(b₀) et δ ≤ 4** (par exemple δ = 2 et A ⊆ N(b₀)).
+- (e) Sinon, il existe au moins 5 − δ + |B∖N[b₀]| sommets y ∈ Y à distance 3 de b₀ (ceux à distance 4 sont déjà dans Γ(b₀)). Leurs voisins dans A sont dans A∖N(b₀), qui a ≤ δ − 1 − |B∖N[b₀]| sommets, et y ≁ e.
+- (f) La somme de Lemme 1 sur les δ arêtes de x₀ (où Γ(x₀) est exacte) redonne seulement n ≤ (δ+1)σ − δ + 3 − Σ_{z∈A∪{e}} #{b ∈ N(x₀) : d(b,z) = 2}.
+
+Données :
+- Recuit structuré sur le gabarit x₀, u, A, B, e, Y∪W (`sa3.c`, σ = 4–6, δ = 2–5, n = 2σ+5, +6) : aucune solution. Les minima locaux ne violent (H) qu'en **u, b₀ ou x₀** ; par exemple `Nj\||}~LO?eb?F?F_Bw` (σ = 5, δ = 4, n = 15) viole seulement en b₀, avec Γ(b₀) = {u} ∪ W ∪ Y = σ + 1.
+- Le trou restant est le couplage de (H) en u et en b₀ lorsque δ ≥ 5, ou lorsque Y ⊄ L₂(b₀). Il faut une analyse par cas sur δ.
+
+### MG2.3 Croisements généralisés (cadre x₀-plus long, sans (H)) : prouvés
+K est une composante de G[R], y, y' ∈ K (éventuellement y = y'), et Q est un chemin de K de y' à y à h sommets.
+- **(GC1)** Si y' ~ x_p, y ~ x_i et p < i, alors x_{i+1} n'a aucun voisin x_l avec p < l ≤ min(p + h, i − 1), sauf si x₀ ∈ {x_{p+1},…,x_{l−1}}. Preuve : x₁…x_p Q x_i x_{i−1}…x_l x_{i+1}…x_m a m + h − (l − p − 1) sommets. Pour l = p+1, c'est le croisement classique x_{p+1} ≁ x_{i+1}.
+- **(GC2)** De façon symétrique, x_{p−1} n'a aucun voisin x_l avec max(i − h, p + 1) ≤ l < i, sauf si x₀ ∈ {x_{l+1},…,x_{i−1}}. Chemin : x₁…x_{p−1} x_l x_{l−1}…x_p Q x_i…x_m.
+- **(RL)** Si y ~ x_i et si K contient un chemin à h sommets finissant en y, alors x_{i+1} n'a aucun voisin dans {x₁,…,x_{min(h, i−1)}}, sauf si x₀ précède ce voisin. Chemin : Q x_i…x_l x_{i+1}…x_m. Le miroir vaut pour x_{i−1} et {x_{m−h+1},…,x_m}. Le cas h = 1 est le Lemme 5b, et RL généralise (Q1 i).
+- Vérification (`gc.py`) : tous les graphes 2-connexes non traçables avec n ≤ 9 (8 + 114 + 1 455), tout x₀ de degré min, tous les chemins x₀-plus longs, 875 880 attaches testées : **0 échec**.
+
+### MG2.4 Lemme T + croisements : ce qu'on obtient, et pourquoi ce n'est pas une insertion
+Soit i une attache via y, avec x_i, x_{i±1} ≠ x₀. Le Lemme T donne un sommet commun x_l de x_ix_{i+1} et un sommet commun x_{l'} de x_{i−1}x_i, tous deux sur P.
+- Si l < i : RL et GC1 imposent l ≥ h_y + 1 (h_y ≥ 3 par (Q3)), et l évite les fenêtres ]p, p+h] des attaches p < i.
+- Si l' > i : RL miroir et GC2 donnent les contraintes symétriques.
+- **Configuration résiduelle** : l > i+1 et l' < i−1, c'est-à-dire deux cordes x_{l'}x_i et x_ix_l avec x_{l'} ~ x_{i−1} et x_l ~ x_{i+1} (un éventail de triangles autour de x_i). Aucune réorganisation de V(P) n'y rend y insérable. Le cas où P contient les cordes x_{i−1}x_{i+1} (sommet commun = voisin de voisin) rend aussi le Lemme T vide sur P.
+- Avec (H), le principe donne pour toute attache : t(y x_i) ≥ |(N_P(y)^± ∪ K₂(y) ∪ B'_y) ∖ N(x_i)| − 1. Autrement dit, x_i voit presque tout le Γ(y) de Lemma P corrigé, ou partage beaucoup de voisins avec y. C'est une densité locale, mais pas une contradiction.
+
+### MG2.5 Pistes du point 3
+- diam ≤ 4 : pas de preuve. Sommer l'identité le long d'une géodésique revient à sommer Lemme 1 sur un couplage, et n'apporte rien. Données : vraie pour tout graphe de (H) avec n ≤ 10 et dans tout le corpus MG.1.
+- G[N(v)] a ≤ 2 composantes (n ≥ 2σ+5) : pas de preuve, et cette propriété ne débloquerait pas MG2.4. Oberly–Sumner demande la connexité locale et l'absence de griffe, toutes deux fausses (MG.4).
+
+### MG2.6 Trou exact (mis à jour)
+1. Le sous-cas x₀ du Lemme T, réduit en MG2.2 (d)–(e) : δ ≥ 5, ou au moins 5 − δ sommets de Y à distance 3 de b₀.
+2. Le cas restant, inchangé : G 2-connexe, (H), n ≥ 2σ+7, cadre x₀-plus long. Il faut exclure toute composante K (|K| ≥ 3, δ(K) ≥ 2) dont toute attache non résolue par RL, GC1 et GC2 est en configuration d'éventail (MG2.4). Une preuve doit utiliser (H) sur des sommets de P éloignés de K (M3.2) ; les arguments locaux autour de K, y compris par triangles, ne suffisent pas.
